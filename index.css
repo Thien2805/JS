@@ -1,7 +1,49 @@
-table, th, td{
+table,
+th,
+td {
     border: 1px solid;
-}
-table{
-    width: 100%;
     border-collapse: collapse;
+}
+
+table {
+    width: 100%;
+}
+
+button {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: purple;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+}
+
+button:hover {
+    background-color: #58257b
+}
+
+button:active {
+    background-color: #58257b;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+p{
+    font-family: Comic Sans MS;
+}
+input{
+    background-color: #666;
+}
+input:active{
+    border-style:outset;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+input:hover{
+    background-color:greenyellow;
 }
