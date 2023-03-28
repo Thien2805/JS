@@ -1,135 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
   <link rel="stylesheet" href="index.css">
+
 </head>
+
 <body>
-  <p>Name:</p> <input type="text" id="ten">
-  <p>Class:</p> <input type="text" id="lop">
-  <p>Student ID</p> <input type="text" id="id">
-  <p>DOB:</p> <input type="text" id="dob">
-  <p>Maths scores:</p> <input type="text" id="diemtoan">
-  <p>Physicals scores:</p> <input type="text" id="diemly">
-  <p>Chemicals scores:</p> <input type="text" id="diemhoa">
-  <br>
-  <br>
-  <button id="nhap">Nhập</button>
-  <button id="tinhdiemtrungbinh">Tính điểm trung bình</button>
-  <button id="xacdinhhocluc">Xác định học lực</button>
-  <br>
-  <br>
-  <table>
-    <thead>
-      <tr>
-        <th>Họ và tên</th>
-        <th>Lớp</th>
-        <th>Mã sinh viên</th>
-        <th>Ngày sinh</th>
-        <th>Điểm toán</th>
-        <th>Điểm lý</th>
-        <th>Điểm hóa</th>
-        <th>Điểm trung bình</th>
-        <th>Học lực</th>
-      </tr>
-    </thead>
-    <tbody id="tbody"></tbody>
-  </table>
-  <script>
-    index=1;
-    let nhap = document.getElementById("nhap")
-    nhap.onclick = addrow;
-    function addrow(){
-      let tbody= document.getElementById("tbody");
-      let tr1= document.createElement("tr");
-      tbody.append(tr1);
-      console.log(tr1);
-      tr1.id= index;
-      let hoten =document.getElementById("ten");
-      let lop =document.getElementById("lop");
-      let idstudent =document.getElementById("id");
-      let ngaysinh =document.getElementById("dob");
-      let diemtoan =document.getElementById("diemtoan");
-      let diemly =document.getElementById("diemly");
-      let diemhoa =document.getElementById("diemhoa");
-      
-      let tdhoten = document.createElement("td");
-      let tdlop = document.createElement("td");
-      let tdidstudent = document.createElement("td");
-      let tdngaysinh = document.createElement("td");
-      let tddiemtoan = document.createElement("td");
-      let tddiemly = document.createElement("td");
-      let tddiemhoa = document.createElement("td");
-      let tddiemtrungbinh = document.createElement("td");
-      let tdhocluc = document.createElement("td");
-      
-      tr1.append(tdhoten);
-      tr1.append(tdlop);
-      tr1.append(tdidstudent);
-      tr1.append(tdngaysinh);
-      tr1.append(tddiemtoan);
-      tr1.append(tddiemly);
-      tr1.append(tddiemhoa);
-      tr1.append(tddiemtrungbinh);
-      tr1.append(tdhocluc);
-
-      tddiemtoan.id= "toan" + index;
-      tddiemhoa.id= "hoa"  +index;
-      tddiemly.id= "ly" + index;
-      tddiemtrungbinh.id = "dtb" + index;
-      tdhocluc.id = "hluc"+ index;
-      index= index+1;
-
-      tdhoten.innerHTML = ten.value;
-      tdlop.innerHTML = lop.value;
-      tdidstudent.innerHTML = id.value;
-      tdngaysinh.innerHTML= dob.value;
-      tddiemtoan.innerHTML=diemtoan.value;
-      tddiemly.innerHTML=diemly.value;
-      tddiemhoa.innerHTML=diemhoa.value;
-    }
-     let diemtrungbinh=document.getElementById("tinhdiemtrungbinh");
-    diemtrungbinh.onclick= dtb;
-    function dtb(){
-      for(let i=1; i<index;i++){
-      let dtoan= document.getElementById("toan"+i);
-      console.log(dtoan.innerHTML);
-      let dly= document.getElementById("ly"+ i);
-      console.log(dly.innerHTML);
-      let dhoa=document.getElementById("hoa" +i);
-      console.log(dhoa.innerHTML);
-      let dtbinh=document.getElementById("dtb"+i);
-      console.log(dtbinh.innerHTML);
-      dtbinh.innerHTML= (dtoan.innerHTML-(-dly.innerHTML)-(-dhoa.innerHTML))/3;
-    }
-  }
-   let hocluc= document.getElementById("xacdinhhocluc");
-   hocluc.onclick= hl;
-   function hl(){
-    for(let i=1; i<index; i++){
-      let dtbinh=document.getElementById("dtb"+i);
-      console.log(dtbinh.innerHTML);
-      let hluc= document.getElementById("hluc"+i);
-      console.log(hluc.innerHTML);
-      if(dtbinh.innerHTML>=8){
-        hluc.innerHTML="Giỏi"
-      }
-      else if (6.5<=dtbinh.innerHTML&&dtbinh.innerHTML<8){
-        hluc.innerHTML="Khá"
-      }
-      else if (5<=dtbinh.innerHTML&&dtbinh.innerHTML<6.5){
-        hluc.innerHTML="Trung bình"
-      }
-      else{
-        hluc.innerHTML="Yếu"
-      }
-    }
-   }
-  </script>
+  <p>Tên</p>
+  <input type="text" id="ten" />
+  <p>DOB</p>
+  <input type="date" id="dob" />
+  <p>Điểm toán</p>
+  <input type="text" id="toan" />
+  <p>Điểm lý</p>
+  <input type="text" id="ly" />
+  <p>Điểm hoá</p>
+  <input type="text" id="hoa" />
+  <br />
+  <br />
+  <button id="nhap">Nhập</buttom>
+    <button id="dtb">Tính điểm trung bình</button>
+    <button id="hocluc">Xác định học lực</button>
+    <br>
+    </div>
+    <table style="border: 2px solid">
+      <thead>
+        <tr>
+          <th>Họ Tên</th>
+          <th>Ngày sinh</th>
+          <th>Điểm toán</th>
+          <th>Điểm lý</th>
+          <th>Điểm hoá</th>
+          <th>Điểm trung bình</th>
+          <th>Học lực</th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+      </tbody>
+    </table>
+    <script>
+      let index = 1;
+      const nhap = $("#nhap");
+      nhap.on("click", addrow);
+      function addrow() {
+        let tbody = $("#tbody");
+        let tr1 = $("<tr>");
+        tbody.append(tr1);
+        let tdten = $("<td>");
+        tr1.append(tdten);
+        let tddob = $("<td>");
+        tr1.append(tddob);
+        let tdtoan = $("<td>");
+        tr1.append(tdtoan);
+        let tdly = $("<td>");
+        tr1.append(tdly);
+        let tdhoa = $("<td>");
+        tr1.append(tdhoa);
+        let tddtb = $("<td>");
+        tr1.append(tddtb);
+        let tdhocluc = $("<td>");
+        tr1.append(tdhocluc);
 
 
+
+        tdtoan.attr("id", "toan" + index);
+        tdhoa.attr("id", "hoa" + index);
+        tdly.attr("id", "ly" + index);
+        tddtb.attr("id", "dtb" + index);
+        tdhocluc.attr("id", "hluc" + index);
+        index = index + 1;
+
+        let ten = $("#ten");
+        let dob = $("#dob");
+        let toan = $("#toan");
+        let ly = $("#ly");
+        let hoa = $("#hoa")
+
+        tdten.html(ten.val());
+        tddob.html(dob.val());
+        tdtoan.html(toan.val());
+        tdhoa.html(hoa.val());
+        tdly.html(ly.val());
+
+
+      }
+      let diemtrungbinh = $("#dtb");
+      diemtrungbinh.on("click", dtbinh)
+      function dtbinh() {
+        for (let i = 1; i<index;i++ ){
+          let toan = $("#toan"+i);
+        let ly = $("#ly"+i);
+        let hoa = $("#hoa"+i);
+        let dtb = $("#dtb" +i);
+        console.log(dtb.html())
+        dtb.html((toan.html() - (-ly.html()) - (-hoa.html())) / 3);
+      }
+    } let hocluc= $("#hocluc");
+       hocluc.on("click",hluc)
+       function hluc(){
+        for(let i=1; i<index; i++){
+          let dtb = $("#dtb" +i);
+          let hl = $("#hluc"+ i );
+          console.log(hl.html())
+          if(dtb.html()>=8){
+             hl.html("Giỏi");
+          }
+          else if (6.5<=dtb.html()&&dtb.html()<8){
+            hl.html("Khá");
+          }
+          else {
+            hl.html("Trung Bình")
+          }
+        }
+       }
+    </script>
 </body>
+
 </html>
