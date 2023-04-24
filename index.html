@@ -6,120 +6,109 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="index.css">
-
 </head>
 
 <body>
-  <p>Tên</p>
-  <input type="text" id="ten" />
-  <p>DOB</p>
-  <input type="date" id="dob" />
-  <p>Điểm toán</p>
-  <input type="text" id="toan" />
-  <p>Điểm lý</p>
-  <input type="text" id="ly" />
-  <p>Điểm hoá</p>
-  <input type="text" id="hoa" />
-  <br />
-  <br />
-  <button id="nhap">Nhập</buttom>
-    <button id="dtb">Tính điểm trung bình</button>
-    <button id="hocluc">Xác định học lực</button>
-    <br>
+  <div class="container mt-3">
+    <h3>Staff</h3>
+
+
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+      Open modal
+    </button>
+  </div>
+
+  <!-- The Modal -->
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Nhân viên</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <h4 id="ten"></h4>
+          <p id="dob"></p>
+          <p id="ngayvao"></p>
+          <p id="phongban"></p>
+          <p id="ngaynghi"></p>
+          <p id="lamthem"></p>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+
+      </div>
     </div>
-    <table style="border: 2px solid">
-      <thead>
-        <tr>
-          <th>Họ Tên</th>
-          <th>Ngày sinh</th>
-          <th>Điểm toán</th>
-          <th>Điểm lý</th>
-          <th>Điểm hoá</th>
-          <th>Điểm trung bình</th>
-          <th>Học lực</th>
-        </tr>
-      </thead>
-      <tbody id="tbody">
-      </tbody>
-    </table>
-    <script>
-      let index = 1;
-      const nhap = $("#nhap");
-      nhap.on("click", addrow);
-      function addrow() {
-        let tbody = $("#tbody");
-        let tr1 = $("<tr>");
-        tbody.append(tr1);
-        let tdten = $("<td>");
-        tr1.append(tdten);
-        let tddob = $("<td>");
-        tr1.append(tddob);
-        let tdtoan = $("<td>");
-        tr1.append(tdtoan);
-        let tdly = $("<td>");
-        tr1.append(tdly);
-        let tdhoa = $("<td>");
-        tr1.append(tdhoa);
-        let tddtb = $("<td>");
-        tr1.append(tddtb);
-        let tdhocluc = $("<td>");
-        tr1.append(tdhocluc);
+  </div>
+  <main id="main"></main>
+  <script>
+    // get danh sách nhân viên
+    fetch("http://localhost:8081/staffs")
+      .then(function (response) {
+        return response.json();
+      }).then(function (staffs) {
+        // code tạo HTML từ danh sách nhân viên ở đây.
+        staffs.forEach((element) => {
+          let div = document.createElement("div");
+          let p = document.createElement("p");
+          let image = document.createElement("img")
+          document.getElementById("main").append(div);
+          div.id = element.id;
+          div.append(p);
+          div.append(image);
+          p.innerHTML = element.name
+          image.setAttribute("src", element.image)
+          div.onclick = nhanvien;
+
+        });
+        function nhanvien(event) {
+          staffs.forEach((element) => {
+            console.log(element);
+            if ("" + element.id === this.id) {
+              let name = document.getElementById("ten").innerHTML = "Họ và tên: " + element.name;
+              let ngaysinh = new Date(element.doB);
+              document.getElementById("dob").innerHTML = "Ngày sinh: " + ngaysinh.toLocaleDateString();
+              let ngayvao = new Date(element.startDate);
+              document.getElementById("ngayvao").innerHTML = "Ngày vào: " + ngayvao.toLocaleDateString();
+
+              fetch("http://localhost:8081/departments/{id}")
+                .then(function (response) {
+                  return response.json()
+                }).then(function (staffs) {
+                  document.getElementById("phongban").innerHTML = "Phòng ban: " + element.departmentId;
+                  document.getElementById("ngaynghi").innerHTML = "Số ngày nghỉ còn lại: " + element.annualLeave;
+                  document.getElementById("lamthem").innerHTML = "Số ngày đã làm thêm: " + element.overTime;
+                })
 
 
+            }
+          })
 
-        tdtoan.attr("id", "toan" + index);
-        tdhoa.attr("id", "hoa" + index);
-        tdly.attr("id", "ly" + index);
-        tddtb.attr("id", "dtb" + index);
-        tdhocluc.attr("id", "hluc" + index);
-        index = index + 1;
-
-        let ten = $("#ten");
-        let dob = $("#dob");
-        let toan = $("#toan");
-        let ly = $("#ly");
-        let hoa = $("#hoa")
-
-        tdten.html(ten.val());
-        tddob.html(dob.val());
-        tdtoan.html(toan.val());
-        tdhoa.html(hoa.val());
-        tdly.html(ly.val());
-
-
-      }
-      let diemtrungbinh = $("#dtb");
-      diemtrungbinh.on("click", dtbinh)
-      function dtbinh() {
-        for (let i = 1; i<index;i++ ){
-          let toan = $("#toan"+i);
-        let ly = $("#ly"+i);
-        let hoa = $("#hoa"+i);
-        let dtb = $("#dtb" +i);
-        console.log(dtb.html())
-        dtb.html((toan.html() - (-ly.html()) - (-hoa.html())) / 3);
-      }
-    } let hocluc= $("#hocluc");
-       hocluc.on("click",hluc)
-       function hluc(){
-        for(let i=1; i<index; i++){
-          let dtb = $("#dtb" +i);
-          let hl = $("#hluc"+ i );
-          console.log(hl.html())
-          if(dtb.html()>=8){
-             hl.html("Giỏi");
-          }
-          else if (6.5<=dtb.html()&&dtb.html()<8){
-            hl.html("Khá");
-          }
-          else {
-            hl.html("Trung Bình")
-          }
         }
-       }
-    </script>
+
+
+      })
+      //báo lỗi api
+      .catch((error) => {
+        alert(error);
+      });
+    // DELETE xóa một nhân viên
+    fetch("http://localhost:8081/staffs/18", {
+      method: "DELETE",
+    }).then((response) => {
+      console.log(response);
+    });
+  </script>
 </body>
 
 </html>
